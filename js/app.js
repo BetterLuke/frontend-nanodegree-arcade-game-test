@@ -25,10 +25,15 @@ Enemy.prototype.update = function (dt) {
 };
 
 Enemy.prototype.checkCollision = function (player) {
-    if (this.y === player.y) {
-        //console.log(`collision happened!! enemy.x: ${this.x}, player.x: ${player.x}`)
+    x_distance = Math.abs(this.x - player.x); //set distance for safe scope 80
+    y_distance = Math.abs(this.y - player.y);
+    if (y_distance<=50 && x_distance <= 50 ) {
+        //console.log(`collision happened!! enemy.x: ${this.x}, player.x: ${player.x}`);
+        player.reset();
+        return true;
     } else {
-        //console.log(`player's safe!! enemy.x: ${this.x}, player.x: ${player.x}`)
+        //console.log(`player's safe!! enemy.x: ${this.x}, player.x: ${player.x}`);
+        return false;
     }
     //console.log(`check collision() is working, player: ${player.x}, ${player.y}`);
 }
@@ -48,8 +53,18 @@ var Player = function (x, y) {
 };
 
 Player.prototype.update = function (dt) {
-
+    // for(var envy in allEnemies) {
+    //     console.log(toString(envy.checkCollision));
+    // }
 };
+
+Player.prototype.reset = function(){
+    this.x = 202;
+    this.y = 303;
+};
+
+
+
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -83,10 +98,9 @@ Player.prototype.handleInput = function (movent) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-//var allEnemies = [new Enemy(0, 83 * 2, 200), new Enemy(0, 83, 350), new Enemy(0, 83 * 3, 150)];
-var allEnemies = [new Enemy(202, 83 * 2 + 55, 50)];
-var player = new Player(202, 83 * 2 + 55);
-//allEnemies[0].checkCollision(player);
+var allEnemies = [new Enemy(0, 83 * 2, 200), new Enemy(0, 83, 350), new Enemy(0, 83 * 3, 150)];
+//var allEnemies = [new Enemy(202, 83 * 2 + 55, 50)];
+var player = new Player(202, 303);
 
 
 // This listens for key presses and sends the keys to your
